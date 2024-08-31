@@ -19,6 +19,8 @@ import { FormFieldType } from "./forms/PatientForm";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
 import { Select, SelectContent, SelectTrigger, SelectValue } from "./ui/select";
+import { Textarea } from "./ui/textarea";
+import { Checkbox } from "./ui/checkbox";
 
 interface CustomFormFieldProps {
   control: Control<any>;
@@ -67,12 +69,23 @@ const RenderField = ({
           )}
           <FormControl>
             <Input
+              placeholder={props.placeholder}
               {...field}
-              placeholder={placeholder}
               className="shad-input border-0"
             />
           </FormControl>
         </div>
+      );
+    case FormFieldType.TEXTAREA:
+      return (
+        <FormControl>
+          <Textarea
+            placeholder={props.placeholder}
+            {...field}
+            className="shad-textArea"
+            disabled={props.disabled}
+          />
+        </FormControl>
       );
 
     case FormFieldType.PHONE_INPUT:
@@ -89,6 +102,23 @@ const RenderField = ({
           />
         </FormControl>
       );
+
+    case FormFieldType.CHECKBOX:
+      return (
+        <FormControl>
+          <div className="flex items-center gap-4">
+            <Checkbox
+              id={props.name}
+              checked={field.value}
+              onCheckedChange={field.onChange}
+            />
+            <label htmlFor={props.name} className="checkbox-label">
+              {props.label}
+            </label>
+          </div>
+        </FormControl>
+      );
+
     case FormFieldType.DATE_PICKER:
       return (
         <div className="flex rounded-md border border-dark-500 bg-dark-400">
